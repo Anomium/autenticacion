@@ -21,19 +21,6 @@ public class Handler {
     private final UserUseCase userUseCase;
     private final UserFactory userFactory;
 
-    @Operation(
-            summary = "Registra un nuevo usuario",
-            description = "Recibe un UserRequestDTO y crea un nuevo usuario dentro del sistema.",
-            responses = {
-                    @ApiResponse(responseCode = "200", description = "El registro del usuario se completó exitosamente."),
-                    @ApiResponse(responseCode = "400", description = "Error de validación",
-                            content = @Content(mediaType = "application/json",
-                                    schema = @Schema(implementation = Integer.class))),
-                    @ApiResponse(responseCode = "500", description = "Error interno",
-                            content = @Content(mediaType = "application/json",
-                                    schema = @Schema(implementation = Integer.class)))
-            }
-    )
     public Mono<ServerResponse> saveUser(ServerRequest serverRequest) {
         return serverRequest.bodyToMono(UserRequestDTO.class)
                 .flatMap(userRequestDTO -> userUseCase.saveUser(
